@@ -55,7 +55,12 @@ end
 
 # Seed Suppliers
 suppliers = 5.times.map do
-  Supplier.create!(name: Faker::Company.name)
+  Supplier.create!(
+    name: Faker::Company.name,
+    email: Faker::Internet.email,
+    address: Faker::Address.full_address,
+    phone_number: Faker::PhoneNumber.phone_number
+  )
 end
 
 # Seed Products
