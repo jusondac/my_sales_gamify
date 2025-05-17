@@ -1,11 +1,12 @@
 class Supplier < ApplicationRecord
   # Associations
   has_many :products, dependent: :destroy
-
+  belongs_to :user, optional: true
 
   # Validations
   validates :name, presence: true
 
+  delegate :username, to: :user, prefix: true
   ## update the ransackable below with column you want to add ransack
   def self.ransackable_attributes(auth_object = nil)
     ["id"]

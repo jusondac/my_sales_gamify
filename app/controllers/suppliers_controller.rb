@@ -10,6 +10,8 @@ class SuppliersController < ApplicationController
 
   # GET /suppliers/1
   def show
+    @products = @supplier.products.ransack(params[:q])
+    @pagy, @products = pagy(@products.result(distinct: true).order(created_at: :desc), limit: 5)
   end
 
   # GET /suppliers/new

@@ -82,6 +82,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_17_082951) do
     t.string "email"
     t.string "address"
     t.string "phone_number"
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_suppliers_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -102,4 +104,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_17_082951) do
   add_foreign_key "products", "categories"
   add_foreign_key "products", "suppliers"
   add_foreign_key "sessions", "users"
+  add_foreign_key "suppliers", "users"
 end

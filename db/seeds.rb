@@ -59,11 +59,13 @@ suppliers = 5.times.map do
     name: Faker::Company.name,
     email: Faker::Internet.email,
     address: Faker::Address.full_address,
-    phone_number: Faker::PhoneNumber.phone_number
+    phone_number: Faker::PhoneNumber.phone_number,
+    user_id: User.all.sample.id
   )
 end
 
 # Seed Products
+puts "### Creating products... ###"
 products = 20.times.map do
   Product.create!(
     name: Faker::Commerce.product_name,
@@ -74,6 +76,7 @@ products = 20.times.map do
 end
 
 # Seed Inventories
+puts "### Creating inventories... ###"
 products.each do |product|
   Inventory.create!(product: product, stock: rand(10..100))
 end
