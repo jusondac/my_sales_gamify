@@ -9,6 +9,13 @@
 #   end
 require 'faker'
 puts "Seeding database..."
+OrderDetail.delete_all
+Order.delete_all
+Inventory.delete_all
+Product.delete_all
+Category.delete_all
+Supplier.delete_all
+Payment.delete_all
 Order.destroy_all
 User.destroy_all
 
@@ -39,4 +46,50 @@ puts "### Creating orders... ###"
     status: Order.statuses.keys.sample,
     ordered_at: Faker::Date.between(from: '2023-01-01', to: '2023-12-31')
   )
+end
+
+# Seed Categories
+categories = 5.times.map do
+  Category.create!(name: Faker::Commerce.department(max: 1))
+end
+
+# Seed Suppliers
+suppliers = 5.times.map do
+  Supplier.create!(name: Faker::Company.name)
+end
+
+# Seed Products
+products = 20.times.map do
+  Product.create!(
+    name: Faker::Commerce.product_name,
+    price: Faker::Commerce.price(range: 1.0..100.0),
+    category: categories.sample,
+    supplier: suppliers.sample
+  )
+end
+
+# Seed Inventories
+products.each do |product|
+  Inventory.create!(product: product, stock: rand(10..100))
+end
+
+# Seed Payments
+puts "### Creating payments... ###"
+payments = %w[Cash Card E-Wallet Transfer].map do |name|
+  Payment.create!(name: name)
+end
+
+puts "### Creating order details... ###"
+# Seed Orders & OrderDetails
+10.times do
+  order = Order.all.sample
+  rand(1..5).times do
+    OrderDetail.create!(
+      order: order,
+      product: products.sample,
+      payment: payments.sample,
+      discount: rand(0.0..10.0).round(2),
+      service_fee: rand(0..5000)
+    )
+  end
 end

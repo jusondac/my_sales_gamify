@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  resources :order_details
+  resources :payments
+  resources :inventories
+  resources :products
+  resources :suppliers
+  resources :categories
   resources :orders do
     member do
       post :approve_order

@@ -1,0 +1,25 @@
+<%= form_with(model: inventory, class: "contents text-white flex flex-col gap-5 mt-4" ) do |form| %>
+  <% if inventory.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(inventory.errors.count, "error") %> prohibited this inventory from being saved:</h2>
+
+      <ul>
+        <% inventory.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.text_field :product_id, placeholder: "product_id", class: ["block shadow-sm rounded-md border bg-gray-700 px-3 py-2 mt-2 w-full", {"border-gray-600 focus:outline-blue-600": inventory.errors[:product_id].none?, "border-red-400 focus:outline-red-600": inventory.errors[:product_id].any?}] %>
+  </div>
+
+  <div>
+    <%= form.number_field :stock, placeholder: "stock", class: ["block shadow-sm rounded-md border bg-gray-700 px-3 py-2 mt-2 w-full", {"border-gray-600 focus:outline-blue-600": inventory.errors[:stock].none?, "border-red-400 focus:outline-red-600": inventory.errors[:stock].any?}] %>
+  </div>
+
+  <div>
+    <%= form.submit nil, class:"font-bold px-4 py-2 bg-blue-600 text-white rounded-md shadow-md hover:bg-blue-500 inline-flex items-center" %>
+  </div>
+<% end %>

@@ -1,0 +1,17 @@
+<div id=<%= dom_id(order_detail) %>>
+  <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
+    <%= order_detail.order_order_id %>
+  </td>
+  <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
+    <%= order_detail.product_name %>
+  </td>
+  <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
+    <%= order_detail.payment_name %>
+  </td>
+  <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
+    $ <%= number_with_delimiter(order_detail.discount) %>
+  </td>
+  <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
+    $ <%= number_with_delimiter(order_detail.service_fee) %>
+  </td>
+</div>
