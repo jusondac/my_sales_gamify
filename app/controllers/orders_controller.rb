@@ -37,12 +37,12 @@ class OrdersController < ApplicationController
   def approve_order
     @order = Order.find(params[:id])
     @order.update(status: 1)
-    # redirect_to orders_path, notice: "Order was successfully approved."
-    render turbo_stream: turbo_stream.replace(
-      "order_#{@order.id}",
-      partial: "order",
-      locals: { order: @order }
-    )
+    redirect_to orders_path, notice: "Order was successfully approved."
+    # render turbo_stream: turbo_stream.replace(
+    #   "order_#{@order.id}",
+    #   partial: "order",
+    #   locals: { order: @order }
+    # )
     # render json: {}, status: :ok
   end
 
