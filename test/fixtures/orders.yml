@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  order_id: MyString
+  amount: MyString
+  status: 1
+  user: one
+  ordered_at: 2025-05-17 10:02:20
+
+two:
+  order_id: MyString
+  amount: MyString
+  status: 1
+  user: two
+  ordered_at: 2025-05-17 10:02:20

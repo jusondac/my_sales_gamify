@@ -10,14 +10,16 @@ class ApplicationController < ActionController::Base
   def sidebar_menu
     @sidebar_menus = [
       { name: "Dashboard", path: "/", icon: dashboard },
+      { name: "Orders", path: "/orders", icon: orders },
       {
         name: "Product", path: "#", icon: products, submenu: [
           { name: "Products", path: "#" },
-          { name: "Inventory", path: "#" }
+          { name: "Inventory", path: "#" },
+          { name: "Category", path: "#" }
         ]
       },
       {
-        name: "Order", icon: log, submenu: [
+        name: "History", icon: log, submenu: [
           { name: "history", path: "#" },
           { name: "refund", path: "#" },
           { name: "logistic", path: "#" }
