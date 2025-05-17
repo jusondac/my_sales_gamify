@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  resources :orders
+  resources :orders do
+    member do
+      post :approve_order
+    end
+  end
   get "home/index"
   root "home#index"
   get "registrations/new"
