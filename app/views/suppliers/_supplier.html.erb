@@ -1,5 +1,8 @@
 <div id=<%= dom_id(supplier) %>>
-      <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
-      <%= supplier.name %>
-    </td>
-  </div>
+  <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
+    <%= supplier.name %>
+  </td>
+  <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
+    <%= supplier.products.count %> Items
+  </td>
+</div>
