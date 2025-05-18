@@ -5,7 +5,11 @@ class Order < ApplicationRecord
   validates :status, presence: true
   validates :ordered_at, presence: true
 
+  has_many :order_details, dependent: :destroy
+
   scope :total_amount, -> { sum(:amount) }
+
+  delegate :username, to: :user, prefix: true
 
   before_validation :set_order_id
 

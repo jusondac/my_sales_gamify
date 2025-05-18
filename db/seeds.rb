@@ -88,9 +88,10 @@ payments = %w[Cash Card E-Wallet Transfer].map do |name|
 end
 
 puts "### Creating order details... ###"
-# Seed Orders & OrderDetails
-10.times do
-  order = Order.all.sample
+  # Seed Orders & OrderDetails
+
+orders = Order.all
+orders.each do |order|
   rand(1..5).times do
     OrderDetail.create!(
       order: order,
