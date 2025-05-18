@@ -1,7 +1,20 @@
 <% if Current.user %>
   <aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar">
     <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
-      <ul class="space-y-2 font-medium pt-5">
+      <% if Current.user.suppliers.any? %>
+        <div class="mb-4 my-3 mx-3">
+          <%= form_with url: update_session_supplier_home_index_path, method: :post, local: true, html: { data: { controller: "sidebar" } } do |f| %>
+            <%= f.label :supplier, "Choose your supplier 🏢", class: "block mb-2 text-2xl text-gray-900 dark:text-white font-bold" %>
+            <%= select_tag :supplier, options_from_collection_for_select(Current.user.suppliers, :id, :name), 
+              class: "block w-full p-2 border border-gray-300 rounded-lg bg-white dark:bg-gray-700 dark:text-gray-200",
+              prompt: "Select a supplier",
+              data: {
+              action: "change->sidebar#updateSupplier",
+              } %>
+          <% end %>
+        </div>
+      <% end %>
+      <ul class="space-y-2 font-medium">
         <% @sidebar_menus.each do |menu| %>
           <% if menu[:submenu].present? %>
             <li>

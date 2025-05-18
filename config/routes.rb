@@ -10,7 +10,11 @@ Rails.application.routes.draw do
       post :approve_order
     end
   end
-  get "home/index"
+  resources :home, only: [ :index ] do
+    collection do
+      post :update_session_supplier
+    end
+  end
   root "home#index"
   get "registrations/new"
   resource :session

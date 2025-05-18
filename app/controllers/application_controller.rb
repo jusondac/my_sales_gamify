@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
   allow_browser versions: :modern
 
   before_action :sidebar_menu
+  before_action :set_supplier
 
   def sidebar_menu
     @sidebar_menus = [
@@ -23,5 +24,9 @@ class ApplicationController < ActionController::Base
       { name: "Order details", path: "/order_details", icon: order_details },
       { name: "Payments", path: "/payments", icon: payments }
     ]
+  end
+
+  def set_supplier
+    @current_supplier = Supplier.find(session[:supplier]["id"])
   end
 end
