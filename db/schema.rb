@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_17_082951) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_19_004602) do
   create_table "categories", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -33,6 +33,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_17_082951) do
     t.integer "service_fee"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "quantity"
+    t.float "unit_price"
+    t.float "total"
     t.index ["order_id"], name: "index_order_details_on_order_id"
     t.index ["payment_id"], name: "index_order_details_on_payment_id"
     t.index ["product_id"], name: "index_order_details_on_product_id"

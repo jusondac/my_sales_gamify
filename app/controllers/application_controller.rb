@@ -12,6 +12,7 @@ class ApplicationController < ActionController::Base
   def sidebar_menu
     @sidebar_menus = [
       { name: "Dashboard", path: "/", icon: dashboard },
+      { name: "Shop", path: "/shop", icon: shops },
       { name: "Orders", path: "/orders", icon: orders },
       { name: "Suppliers", path: "/suppliers", icon: orders },
       {
@@ -27,6 +28,6 @@ class ApplicationController < ActionController::Base
   end
 
   def set_supplier
-    @current_supplier = Supplier.find(session[:supplier]["id"])
+    @current_supplier = Supplier.find(session[:supplier]) unless session[:supplier]
   end
 end

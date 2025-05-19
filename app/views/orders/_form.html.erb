@@ -1,4 +1,4 @@
-<%= form_with(model: order, class: "contents text-white flex flex-col gap-5 mt-4" ) do |form| %>
+<%= form_with(model: order, class: "contents text-white flex flex-col gap-5 mt-4", data: { controller: "nested-form" }) do |form| %>
   <% if order.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(order.errors.count, "error") %> prohibited this order from being saved:</h2>
@@ -9,10 +9,21 @@
       </ul>
     </div>
   <% end %>
-  <div>
-    <%= form.text_field :amount, placeholder: "amount", class: ["block shadow-sm rounded-md border bg-gray-700 px-3 py-2 mt-2 w-full", {"border-gray-600 focus:outline-blue-600": order.errors[:amount].none?, "border-red-400 focus:outline-red-600": order.errors[:amount].any?}] %>
+  <div data-nested-form-target="orderDetails">
+    <%= form.fields_for :order_details, order.order_details.presence || order.order_details.build do |product_fields| %>
+      <div class="order-detail-fields flex gap-7 mb-2 border-gray-700" data-nested-form-target="orderDetail">
+        <%= product_fields.collection_select :id, Product.all, :id, :name, { prompt: "Select Product" }, class: "block shadow-sm rounded-md border border-gray-700 bg-gray-700 px-3 py-2 mt-2 w-full" %>
+        <%= product_fields.number_field :quantity, placeholder: "Quantity", min: 1, class: "block shadow-sm rounded-md border bg-gray-700 px-3 py-2 border-gray-700 mt-2 w-full" %>
+        <button type="button" data-action="nested-form#remove" class="mt-2 px-3 py-2 bg-red-600 rounded-md">
+          Remove
+        </button>
+      </div>
+    <% end %>
   </div>
-  <div>
+  <div class="flex gap-2">
+    <button type="button" data-action="nested-form#add" class="font-bold px-4 py-2 bg-green-600 text-white rounded-md shadow-md hover:bg-green-500 inline-flex items-center">
+      Add Product
+    </button>
     <%= form.submit nil, class:"font-bold px-4 py-2 bg-blue-600 text-white rounded-md shadow-md hover:bg-blue-500 inline-flex items-center" %>
   </div>
 <% end %>

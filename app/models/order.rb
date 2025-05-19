@@ -6,6 +6,7 @@ class Order < ApplicationRecord
   validates :ordered_at, presence: true
 
   has_many :order_details, dependent: :destroy
+  accepts_nested_attributes_for :order_details, allow_destroy: true
 
   scope :total_amount, -> { sum(:amount) }
 
@@ -14,14 +15,6 @@ class Order < ApplicationRecord
   before_validation :set_order_id
 
   broadcasts_refreshes
-
-  # Enum for status
-  # This will create a mapping for the status column
-  # and also create methods like `order.pending?`, `order.completed?`, etc.
-  # It will also create scopes like `Order.pending`, `Order.completed`, etc.
-  # You can customize the enum values as per your requirement
-  # For example, you can use strings instead of integers
-  # enum status: { pending: 'pending', completed: 'completed', cancelled: 'cancelled' }
 
   enum :status, {
     pending: 0,

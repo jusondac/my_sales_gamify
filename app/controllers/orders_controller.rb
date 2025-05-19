@@ -4,7 +4,7 @@ class OrdersController < ApplicationController
   # GET /orders
   def index
     @q = Order.ransack(params[:q])
-    @pagy, @orders = pagy(@q.result(distinct: true).order(created_at: :desc))
+    @pagy, @orders = pagy(@q.result(distinct: true).where(user: Current.user).order(created_at: :desc))
     @order_form = Order.new
   end
 
@@ -23,10 +23,7 @@ class OrdersController < ApplicationController
 
   # POST /orders
   def create
-    @order = Order.new(order_params)
-    @order.user_id = User.all.sample.id
-    @order.status = 0
-    @order.ordered_at = DateTime.now
+    @order = Orders::Create.call(params)
     if @order.save
       redirect_to orders_path, notice: "Order was successfully created."
     else
