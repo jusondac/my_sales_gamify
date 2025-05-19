@@ -11,23 +11,23 @@ class ApplicationController < ActionController::Base
 
   def sidebar_menu
     @sidebar_menus = [
-      { name: "Dashboard", path: "/", icon: dashboard },
-      { name: "Shop", path: "/shop", icon: shops },
-      { name: "Orders", path: "/orders", icon: orders },
-      { name: "Suppliers", path: "/suppliers", icon: orders },
+      { name: "Dashboard", path: "/", icon: dashboard, role: "admin user supplier" },
+      { name: "Shop", path: "/shop", icon: shops, role: "admin user supplier" },
+      { name: "Orders", path: "/orders", icon: orders, role: "admin user supplier" },
+      { name: "Suppliers", path: "/suppliers", icon: orders, role: "admin user" },
       {
-        name: "Product", icon: products, submenu: [
+        name: "Product", icon: products, role: "supplier", submenu: [
           { name: "Products", path: "/products" },
           { name: "Inventory", path: "/inventories" },
           { name: "Category", path: "/categories" }
         ]
       },
-      { name: "Order details", path: "/order_details", icon: order_details },
-      { name: "Payments", path: "/payments", icon: payments }
+      { name: "Order details", path: "/order_details", icon: order_details, role: "admin user supplier" },
+      { name: "Payments", path: "/payments", icon: payments, role: "admin user supplier" }
     ]
   end
 
   def set_supplier
-    @current_supplier = Supplier.find(session[:supplier]) unless session[:supplier]
+    @current_supplier = Supplier.find(session[:supplier]) unless session[:supplier].nil?
   end
 end

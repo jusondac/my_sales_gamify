@@ -91,8 +91,8 @@ puts "### Creating order details... ###"
 # Seed Orders & OrderDetails
 
 orders = Order.all
-all_total = 0
 orders.each do |order|
+  all_total = 0
   rand(1..5).times do
     product = products.sample
     quantity = rand(1..10)
@@ -100,14 +100,16 @@ orders.each do |order|
     OrderDetail.create!(
       order: order,
       product: product,
-      payment: payments.sample,
       quantity: quantity,
       unit_price: product.price,
       total: total,
-      discount: rand(0.0..10.0).round(2),
-      service_fee: rand(0..5000)
     )
+    all_total += total
   end
-  all_total += total
-  order.update(amount: all_total)
+  order.update(
+    amount: all_total,
+    payment_id: payments.sample.id,
+    discount: rand(0.0..10.0).round(2),
+    service_fee: rand(0..5000),
+  )
 end

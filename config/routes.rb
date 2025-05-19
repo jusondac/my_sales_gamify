@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :carts, only: %i[index]
   resources :shop, only: %i[index]
   resources :order_details
   resources :payments

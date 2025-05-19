@@ -14,6 +14,6 @@ class Product < ApplicationRecord
   end
 
   def self.ransackable_associations(auth_object = nil)
-    []
+    ["supplier", "category"]
   end
 end

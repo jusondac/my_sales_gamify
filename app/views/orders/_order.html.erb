@@ -4,7 +4,7 @@
     <%= order.order_id %>
   </td>
   <td class="p-4 text-base font-bold text-gray-900 whitespace-nowrap dark:text-white">
-    $<%= number_with_delimiter(order.amount) %>
+    <%= number_to_currency(order.amount) %>
   </td>
   <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-gray-400">
     <%= order.status %>

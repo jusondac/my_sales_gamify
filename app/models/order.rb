@@ -1,5 +1,6 @@
 class Order < ApplicationRecord
   belongs_to :user
+  belongs_to :payment, optional: true
   # Validations
   validates :amount, presence: true
   validates :status, presence: true

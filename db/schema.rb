@@ -28,16 +28,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_19_004602) do
   create_table "order_details", force: :cascade do |t|
     t.integer "order_id", null: false
     t.integer "product_id", null: false
-    t.integer "payment_id", null: false
-    t.float "discount"
-    t.integer "service_fee"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "quantity"
     t.float "unit_price"
     t.float "total"
     t.index ["order_id"], name: "index_order_details_on_order_id"
-    t.index ["payment_id"], name: "index_order_details_on_payment_id"
     t.index ["product_id"], name: "index_order_details_on_product_id"
   end
 
@@ -49,6 +45,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_19_004602) do
     t.datetime "ordered_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float "service_fee"
+    t.float "discount"
+    t.integer "payment_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
@@ -101,7 +100,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_19_004602) do
 
   add_foreign_key "inventories", "products"
   add_foreign_key "order_details", "orders"
-  add_foreign_key "order_details", "payments"
   add_foreign_key "order_details", "products"
   add_foreign_key "orders", "users"
   add_foreign_key "products", "categories"
