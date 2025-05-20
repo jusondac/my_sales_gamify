@@ -1,6 +1,9 @@
 class Product < ApplicationRecord
   belongs_to :category
   belongs_to :supplier
+
+  has_many :cart_details, dependent: :destroy
+  has_many :carts, through: :cart_details
   # Validations
   validates :name, presence: true
   validates :price, presence: true

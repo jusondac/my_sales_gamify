@@ -3,9 +3,14 @@ Rails.application.routes.draw do
     collection do
       post :add
       post :remove
+      post :decrement
+      post :increment
+      post :favorite
+      post :unfavorite
+      post :checkout
     end
   end
-  resources :shop, only: %i[index]
+  resources :shop, only: %i[index] 
   resources :order_details
   resources :payments
   resources :inventories

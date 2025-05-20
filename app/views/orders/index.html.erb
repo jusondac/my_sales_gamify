@@ -93,19 +93,19 @@
           <th scope="col" class="px-6 py-3">
           </th>
           <th scope="col" class="px-6 py-3">
-            order_id
+            <%= sort_link(@q, :order_id, "order_id") %>
+          </th> 
+          <th scope="col" class="px-6 py-3">
+            <%= sort_link(@q, :amount, "amount") %>
           </th>
           <th scope="col" class="px-6 py-3">
-            amount
+            <%= sort_link(@q, :status, "status") %>
           </th>
           <th scope="col" class="px-6 py-3">
-            status
+            <%= sort_link(@q, :user_id, "User") %>
           </th>
           <th scope="col" class="px-6 py-3">
-            User
-          </th>
-          <th scope="col" class="px-6 py-3">
-            ordered_at
+            <%= sort_link(@q, :ordered_at, "ordered_at") %>
           </th>
           <th scope="col" class="px-6 py-3">
             Action

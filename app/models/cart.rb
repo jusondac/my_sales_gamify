@@ -2,6 +2,11 @@ class Cart < ApplicationRecord
   belongs_to :order, optional: true
   belongs_to :user
   has_many  :cart_details
+  has_many  :products, through: :cart_details
+  has_many  :suppliers, through: :products
+  has_many  :categories, through: :products
+  has_many  :orders, through: :cart_details
+  has_many  :order_details, through: :orders
   # Validations
   validates :status, presence: true
 

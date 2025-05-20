@@ -9,7 +9,7 @@ class Supplier < ApplicationRecord
   delegate :username, to: :user, prefix: true
   ## update the ransackable below with column you want to add ransack
   def self.ransackable_attributes(auth_object = nil)
-    ["id"]
+    [ "id", "name", "created_at", "updated_at", "user_id", "phone_number", "product_count", "email" ]
   end
 
   def self.ransackable_associations(auth_object = nil)
