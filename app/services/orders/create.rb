@@ -1,7 +1,6 @@
 # app/services/order_creator.rb
-class Orders::Create 
+class Orders::Create
   def self.call(params)
-
     order_details = params[:order][:order_details_attributes]
 
     order_details.each do |order_detail|

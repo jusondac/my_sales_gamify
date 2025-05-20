@@ -10,7 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_19_004602) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_19_230238) do
+  create_table "cart_details", force: :cascade do |t|
+    t.integer "cart_id", null: false
+    t.integer "product_id", null: false
+    t.integer "status"
+    t.integer "quantity"
+    t.float "total_price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cart_id"], name: "index_cart_details_on_cart_id"
+    t.index ["product_id"], name: "index_cart_details_on_product_id"
+  end
+
+  create_table "carts", force: :cascade do |t|
+    t.integer "status"
+    t.float "total_price", default: 0.0
+    t.float "fee", default: 0.0
+    t.float "discount", default: 0.0
+    t.integer "order_id"
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_carts_on_order_id"
+    t.index ["user_id"], name: "index_carts_on_user_id"
+  end
+
   create_table "categories", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -98,6 +123,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_19_004602) do
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
+  add_foreign_key "cart_details", "carts"
+  add_foreign_key "cart_details", "products"
+  add_foreign_key "carts", "orders"
+  add_foreign_key "carts", "users"
   add_foreign_key "inventories", "products"
   add_foreign_key "order_details", "orders"
   add_foreign_key "order_details", "products"

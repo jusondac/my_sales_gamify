@@ -75,17 +75,17 @@
             <td class="px-4 py-2 text-gray-900 dark:text-gray-100"><%= detail.product.category_name || detail.product_id %></td>
             <td class="px-4 py-2 text-gray-900 dark:text-gray-100"><%= detail.product.supplier.name %></td>
             <td class="px-4 py-2 text-gray-700 dark:text-gray-200"><%= detail&.quantity %></td>
-            <td class="px-4 py-2 text-gray-700 dark:text-gray-200"><%= number_to_currency(detail&.unit_price) %></td>
-            <td class="px-4 py-2 font-bold text-gray-700 dark:text-gray-200"><%= number_to_currency(detail&.total) %></td>
+            <td class="px-4 py-2 font-extrabold text-gray-700 dark:text-gray-200"><%= number_to_currency(detail&.unit_price) %></td>
+            <td class="px-4 py-2 font-extrabold text-gray-700 dark:text-gray-200"><%= number_to_currency(detail&.total) %></td>
           </tr>
         <% end %>
         <tr>
           <td class="px-4 py-2 text-gray-900 dark:text-gray-100 font-bold" colspan="5">Service Fee</td>
-          <td class="px-4 py-2 text-gray-900 dark:text-gray-100 font-bold"><%= number_to_currency(@order.service_fee) %></td>
+          <td class="px-4 py-2 text-gray-900 dark:text-gray-100 font-extrabold"><%= number_to_currency(@order.service_fee) %></td>
         </tr>
         <tr>
           <td class="px-4 py-2 text-gray-900 dark:text-gray-100 font-bold" colspan="5">Discount</td>
-          <td class="px-4 py-2 text-gray-900 dark:text-gray-100 font-bold"><%= number_to_currency(@order.discount) %></td>
+          <td class="px-4 py-2 text-gray-900 dark:text-gray-100 font-extrabold"><%= number_to_currency(@order.discount) %></td>
         </tr>
       </tbody>
     </table>

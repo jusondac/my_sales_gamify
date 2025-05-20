@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
-  resources :carts, only: %i[index]
+  resources :carts, only: %i[index] do
+    collection do
+      post :add
+      post :remove
+    end
+  end
   resources :shop, only: %i[index]
   resources :order_details
   resources :payments
