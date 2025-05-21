@@ -52,6 +52,10 @@
           <span class="text-gray-600 dark:text-gray-300 font-medium">Ordered at:</span>
           <span class="text-lg text-gray-900 dark:text-white font-semibold"><%= @order.created_at.strftime("%Y-%m-%d %H:%M") %></span>
         </div>
+        <div class="flex items-center gap-2">
+  <span class="text-gray-600 dark:text-gray-300 font-medium"> Payment:</span>
+  <span class="text-lg text-gray-900 dark:text-white font-semibold"><%= @order&.payment.name %></span>
+</div>
       </div>
     </div>
   </div>
@@ -80,12 +84,20 @@
           </tr>
         <% end %>
         <tr>
+          <td class="px-4 py-2 text-gray-900 dark:text-gray-100 font-bold" colspan="5">Total</td>
+          <td class="px-4 py-2 text-green-400 dark:text-green-400 font-extrabold"><%= number_to_currency(@order&.actual_price || @order&.cart&.actual_price || 0 ) %></td>
+        </tr>
+        <tr>
+          <td class="px-4 py-2 text-gray-900 dark:text-gray-100 font-bold" colspan="5">Discount</td>
+          <td class="px-4 py-2 text-green-400 dark:text-green-400 font-extrabold">- <%= number_to_currency(@order.discount) %></td>
+        </tr>
+        <tr>
           <td class="px-4 py-2 text-gray-900 dark:text-gray-100 font-bold" colspan="5">Service Fee</td>
           <td class="px-4 py-2 text-gray-900 dark:text-gray-100 font-extrabold"><%= number_to_currency(@order.service_fee) %></td>
         </tr>
         <tr>
-          <td class="px-4 py-2 text-gray-900 dark:text-gray-100 font-bold" colspan="5">Discount</td>
-          <td class="px-4 py-2 text-gray-900 dark:text-gray-100 font-extrabold"><%= number_to_currency(@order.discount) %></td>
+          <td class="px-4 py-2 text-gray-900 dark:text-gray-100 font-bold" colspan="5">Total</td>
+          <td class="px-4 py-2 text-gray-900 dark:text-gray-100 font-extrabold"><%= number_to_currency(@order.amount) %></td>
         </tr>
       </tbody>
     </table>

@@ -12,7 +12,7 @@ class Product < ApplicationRecord
   delegate :name, to: :supplier, prefix: true
 
   def in_carts?(cart)
-    !cart.cart_details.where(product: self).exists?
+    cart.order_details.where(product_id: self.id).empty?
   end
 
 

@@ -5,9 +5,9 @@ class Order < ApplicationRecord
   validates :amount, presence: true
   validates :status, presence: true
   validates :ordered_at, presence: true
+  has_one :cart
 
   has_many :order_details, dependent: :destroy
-  accepts_nested_attributes_for :order_details, allow_destroy: true
 
   scope :total_amount, -> { sum(:amount) }
 

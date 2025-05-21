@@ -26,6 +26,11 @@ class CartsController < ApplicationController
     redirect_to request.referer
   end
 
+  def checkout
+    @cart = Carts.checkout(Current.user, params[:payment_method])
+    redirect_to request.referer, notice: "Checkout successful! check your order in #{view_context.link_to('your Orders', orders_path, class: "underline").html_safe}."
+  end
+
   private
 
   def load_supplier_status

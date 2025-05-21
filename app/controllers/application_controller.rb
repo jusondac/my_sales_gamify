@@ -22,7 +22,6 @@ class ApplicationController < ActionController::Base
           { name: "Category", path: "/categories" }
         ]
       },
-      { name: "Order details", path: "/order_details", icon: order_details, role: "admin user supplier" },
       { name: "Payments", path: "/payments", icon: payments, role: "admin user supplier" }
     ]
   end

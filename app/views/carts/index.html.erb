@@ -4,7 +4,7 @@
     <div class="mt-6 sm:mt-8 md:gap-6 lg:flex lg:items-start xl:gap-8">
       <div class="mx-auto w-full flex flex-col gap-5 lg:max-w-2xl xl:max-w-4xl">
         <!--- items here --->
-        <% if @cart.cart_details.empty? %>
+        <% if @cart.order_details.empty? %>
           <div class="space-y-6">
             <div class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 md:p-6">
               <div class="space-y-4  text-center">
@@ -14,7 +14,7 @@
             </div>
           </div>
         <% else %>
-          <% @cart.cart_details.each do |item| %>
+          <% @cart.order_details.each do |item| %>
             <div class="space-y-6">
               <div class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 md:p-6">
                 <div class="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0">
@@ -25,7 +25,7 @@
                       <%= button_to '+', increment_carts_path, params: {product_id: item.product.id}, method: :post, class: "inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700", form_class: "inline" %>
                     </div>
                     <div class="text-end md:order-4 md:w-32">
-                      <p class="text-base font-bold text-gray-900 dark:text-white"><%= number_to_currency(item.total_price) %></p>
+                      <p class="text-base font-bold text-gray-900 dark:text-white"><%= number_to_currency(item.total) %></p>
                     </div>
                   </div>
                   <div class="w-full min-w-0 flex-1 space-y-4 md:order-2 md:max-w-md">
@@ -51,7 +51,7 @@
           <% end %>
         <% end %>
         <!--- people also bought --->
-        <div class="hidden xl:mt-8 xl:block">
+        <!--- <div class="hidden xl:mt-8 xl:block">
           <h3 class="text-2xl font-semibold text-gray-900 dark:text-white">People also bought</h3>
           <div class="mt-6 grid grid-cols-3 gap-4 sm:mt-8">
             <div class="space-y-6 overflow-hidden rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
@@ -142,28 +142,41 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> --->
       </div>
       <div class="mx-auto mt-6 max-w-4xl flex-1 space-y-6 lg:mt-0 lg:w-full">
         <div class="space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6">
           <p class="text-xl font-semibold text-gray-900 dark:text-white">Order summary</p>
-          <div class="space-y-4">
-            <div class="space-y-2">
-              <dl class="flex items-center justify-between gap-4">
-                <dt class="text-base font-normal text-gray-500 dark:text-gray-400">Original price</dt>
-                <dd class="text-base font-medium text-gray-900 dark:text-white"><%= number_to_currency(@cart.total_price) %></dd>
-              </dl>
-              <dl class="flex items-center justify-between gap-4">
-                <dt class="text-base font-normal text-gray-500 dark:text-gray-400">Discount</dt>
-                <dd class="text-base font-medium text-green-600"><%= number_to_currency(@cart.discount) %></dd>
-              </dl>
-              <dl class="flex items-center justify-between gap-4">
-                <dt class="text-base font-normal text-gray-500 dark:text-gray-400">service fee</dt>
-                <dd class="text-base font-medium text-gray-900 dark:text-white"><%= number_to_currency(@cart.fee) %></dd>
-              </dl>
+          <%= form_with url: checkout_carts_path, method: :post, local: true do |f| %>
+            <div class="space-y-4">
+              <div class="space-y-2">
+                <dl class="flex items-center justify-between gap-4">
+                  <dt class="text-base font-normal text-gray-500 dark:text-gray-400">Original price</dt>
+                  <dd class="text-base font-medium text-gray-900 dark:text-white"><%= number_to_currency(@cart.actual_price) %></dd>
+                </dl>
+                <dl class="flex items-center justify-between gap-4">
+                  <dt class="text-base font-normal text-gray-500 dark:text-gray-400">Discount</dt>
+                  <dd class="text-base font-medium text-red-300"><%= number_to_currency(@cart.discount) %></dd>
+                </dl>
+                <dl class="flex items-center justify-between gap-4">
+                  <dt class="text-base font-normal text-gray-500 dark:text-gray-400">service fee</dt>
+                  <dd class="text-base font-medium text-gray-900 dark:text-green-300"><%= number_to_currency(@cart.fee) %></dd>
+                </dl>
+                <hr class="my-4 border-t border-gray-200 dark:border-gray-700" />
+                <dl class="flex items-center justify-between gap-4">
+                  <dt class="text-base font-normal text-gray-500 dark:text-gray-400">Total</dt>
+                  <dd class="text-base font-medium text-gray-900 dark:text-white"><%= number_to_currency(@cart.total_price) %></dd>
+                </dl>
+                <dl class="flex items-center justify-between gap-4">
+                  <dt class="text-base font-normal text-gray-500 dark:text-gray-400">Payment Method</dt>
+                  <dd class="text-base font-medium text-gray-900 dark:text-white">
+                    <%= f.select :payment_method, options_from_collection_for_select(Payment.all, :id, :name), {}, class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:text-white px-2 py-2" %>
+                  </dd>
+                </dl>
+              </div>
             </div>
-          </div>
-          <%= link_to 'Proceed to Checkout', checkout_carts_path, class: "flex w-full items-center justify-center rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" %>
+            <%= f.submit 'Checkout', class: "text-xl font-extrabold flex w-full items-center justify-center mt-10 rounded-lg bg-blue-700 px-5 py-2.5 text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" %>
+          <% end %>
           <div class="flex items-center justify-center gap-2">
             <span class="text-sm font-normal text-gray-500 dark:text-gray-400"> or </span>
             <a href="/shop" title="" class="inline-flex items-center gap-2 text-sm font-medium text-blue-700 underline hover:no-underline dark:text-blue-500">

@@ -10,19 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_20_083807) do
-  create_table "cart_details", force: :cascade do |t|
-    t.integer "cart_id", null: false
-    t.integer "product_id", null: false
-    t.integer "status"
-    t.integer "quantity"
-    t.float "total_price"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["cart_id"], name: "index_cart_details_on_cart_id"
-    t.index ["product_id"], name: "index_cart_details_on_product_id"
-  end
-
+ActiveRecord::Schema[8.0].define(version: 2025_05_21_012856) do
   create_table "carts", force: :cascade do |t|
     t.integer "status"
     t.float "total_price", default: 0.0
@@ -32,6 +20,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_20_083807) do
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "actual_price", precision: 10, scale: 2
     t.index ["order_id"], name: "index_carts_on_order_id"
     t.index ["user_id", "status"], name: "index_carts_on_user_id_and_status"
     t.index ["user_id"], name: "index_carts_on_user_id"
@@ -52,13 +41,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_20_083807) do
   end
 
   create_table "order_details", force: :cascade do |t|
-    t.integer "order_id", null: false
+    t.integer "order_id"
     t.integer "product_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "quantity"
     t.float "unit_price"
     t.float "total"
+    t.integer "cart_id"
+    t.decimal "actual_price", precision: 10, scale: 2
+    t.index ["cart_id"], name: "index_order_details_on_cart_id"
     t.index ["order_id"], name: "index_order_details_on_order_id"
     t.index ["product_id"], name: "index_order_details_on_product_id"
   end
@@ -74,6 +66,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_20_083807) do
     t.float "service_fee"
     t.float "discount"
     t.integer "payment_id"
+    t.decimal "actual_price", precision: 10, scale: 2
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
@@ -124,11 +117,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_20_083807) do
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
-  add_foreign_key "cart_details", "carts"
-  add_foreign_key "cart_details", "products"
   add_foreign_key "carts", "orders"
   add_foreign_key "carts", "users"
   add_foreign_key "inventories", "products"
+  add_foreign_key "order_details", "carts"
   add_foreign_key "order_details", "orders"
   add_foreign_key "order_details", "products"
   add_foreign_key "orders", "users"
